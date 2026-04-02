@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: deny-all
-  namespace: ads-system
+  namespace: default
 spec:
   podSelector: {}
   policyTypes:
@@ -13,7 +13,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-dns
-  namespace: ads-system
+  namespace: default
 spec:
   podSelector: {}
   policyTypes:
@@ -34,7 +34,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-ide-egress
-  namespace: ads-system
+  namespace: default
 spec:
   podSelector:
     matchLabels:
@@ -47,25 +47,49 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-alb-to-ide
-  namespace: ads-system
+  name: allow-router-to-ide
+  namespace: default
 spec:
   podSelector:
     matchLabels:
       app: ide
   ingress:
-  - ports:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ide-router
+    ports:
     - port: 8080
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-alb-to-bayarea
-  namespace: ads-system
+  name: allow-alb-to-router
+  namespace: default
 spec:
   podSelector:
     matchLabels:
-      app: bayarea
+      app: ide-router
   ingress:
   - ports:
     - port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-router-egress
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: ide-router
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: ide
+    ports:
+    - port: 8080
+

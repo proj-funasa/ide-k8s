@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ide-router
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ide-router
+  template:
+    metadata:
+      labels:
+        app: ide-router
+    spec:
+      containers:
+      - name: router
+        image: openresty/openresty:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config
+          mountPath: /etc/nginx/conf.d
+        resources:
+          requests:
+            memory: 32Mi
+            cpu: 50m
+          limits:
+            memory: 64Mi
+      volumes:
+      - name: config
+        configMap:
+          name: ide-router-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ide-router
+  namespace: default
+spec:
+  selector:
+    app: ide-router
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ide-router-config
+  namespace: default
+data:
+  default.conf: |
+    lua_package_path "/usr/local/openresty/lualib/?.lua;;";
+    server {
+        listen 80;
+        resolver kube-dns.kube-system.svc.cluster.local valid=5s;
+
+        location / {
+            set $target '';
+            access_by_lua_block {
+                local cjson = require "cjson"
+                -- ALB puts OIDC claims in this header
+                local claims_header = ngx.req.get_headers()["x-amzn-oidc-data"]
+                if not claims_header then
+                    ngx.status = 401
+                    ngx.say("No auth claims")
+                    return ngx.exit(401)
+                end
+
+                -- JWT: header.payload.sig — decode payload
+                local parts = {}
+                for p in claims_header:gmatch("[^%.]+") do table.insert(parts, p) end
+                local payload = ngx.decode_base64(parts[2] .. string.rep("=", (4 - #parts[2] % 4) % 4))
+                local claims = cjson.decode(payload)
+                local email = claims["email"] or ""
+
+                -- sanitize: take local part, lowercase, replace non-alnum with dash
+                local slug = email:match("^(.+)@"):lower():gsub("[^a-z0-9]", "-"):sub(1, 40)
+                ngx.var.target = "ide-" .. slug .. ".default.svc.cluster.local"
+            }
+            proxy_pass http://$target;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
+            proxy_read_timeout 3600s;
+            proxy_send_timeout 3600s;
+        }
+    }

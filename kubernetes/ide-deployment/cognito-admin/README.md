@@ -1,8 +1,8 @@
-# Cognito Admin ADS
+# Cognito Admin IESB IDE
 
 ## Português
 
-Ferramenta de administração de usuários no Cognito User Pool utilizado pela IDE (ads.dataiesb.com).
+Ferramenta de administração de usuários no Cognito User Pool utilizado pela IDE (ide.dataiesb.com).
 
 ### Pré-requisitos
 
@@ -26,7 +26,7 @@ pip install boto3 streamlit
 2. Configure o perfil AWS com as chaves geradas:
 
 ```bash
-aws configure --profile cognito_admin_ads
+aws configure --profile cognito_admin_iesb
 ```
 
 3. Execute a aplicação:
@@ -37,19 +37,19 @@ streamlit run cognito_admin.py
 
 ### Permissões IAM
 
-O usuário `cognito_admin_ads` possui acesso apenas a:
+O usuário `cognito_admin_iesb` possui acesso apenas a:
 
 - `cognito-idp:ListUsers`
 - `cognito-idp:AdminCreateUser`
 - `cognito-idp:AdminDeleteUser`
 
-Restrito ao user pool `us-east-1_O3ALe8QmD`.
+Restrito ao user pool `us-east-1_KsQSqvc9B`.
 
 ---
 
 ## English
 
-Admin tool for managing users in the Cognito User Pool used by the IDE (ads.dataiesb.com).
+Admin tool for managing users in the Cognito User Pool used by the IDE (ide.dataiesb.com).
 
 ### Prerequisites
 
@@ -73,7 +73,7 @@ pip install boto3 streamlit
 2. Configure the AWS profile with the generated access keys:
 
 ```bash
-aws configure --profile cognito_admin_ads
+aws configure --profile cognito_admin_iesb
 ```
 
 3. Run the app:
@@ -84,10 +84,10 @@ streamlit run cognito_admin.py
 
 ### IAM Permissions
 
-The `cognito_admin_ads` user only has access to:
+The `cognito_admin_iesb` user only has access to:
 
 - `cognito-idp:ListUsers`
 - `cognito-idp:AdminCreateUser`
 - `cognito-idp:AdminDeleteUser`
 
-Scoped to the user pool `us-east-1_O3ALe8QmD`.
+Scoped to the user pool `us-east-1_KsQSqvc9B`.

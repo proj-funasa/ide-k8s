@@ -1,11 +1,11 @@
 import streamlit as st
 import boto3
 
-USER_POOL_ID = "us-east-1_O3ALe8QmD"
-session = boto3.Session(profile_name="cognito_admin_ads")
+USER_POOL_ID = "us-east-1_KsQSqvc9B"
+session = boto3.Session(profile_name="cognito_admin_iesb")
 client = session.client("cognito-idp", region_name="us-east-1")
 
-st.title("IDE Cognito Whitelist")
+st.title("IESB IDE - Cognito Whitelist")
 
 # --- List users ---
 st.subheader("Current Users")

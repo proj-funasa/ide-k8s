@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-USER_NAME="cognito_admin_ads"
-POLICY_NAME="CognitoAdminAdsPolicy"
+USER_NAME="cognito_admin_iesb"
+POLICY_NAME="CognitoAdminIesbPolicy"
 ACCOUNT_ID="248189947068"
 REGION="us-east-1"
-SECRET_NAME="cognito-admin-ads-credentials"
-PROFILE_NAME="cognito_admin_ads"
+SECRET_NAME="cognito-admin-iesb-credentials"
+PROFILE_NAME="cognito_admin_iesb"
 
 # Create IAM user
 aws iam create-user --user-name $USER_NAME 2>/dev/null || echo "User $USER_NAME already exists"

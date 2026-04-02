@@ -2,7 +2,7 @@
 
 ## Acesso
 
-- URL: https://ads.dataiesb.com
+- URL: https://ide.dataiesb.com
 - Autenticação via Cognito (email e senha fornecidos pelo administrador)
 
 ## Ferramentas Disponíveis

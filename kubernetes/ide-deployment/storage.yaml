@@ -12,7 +12,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ide-ebs-pvc
-  namespace: ads-system
+  namespace: default
 spec:
   accessModes:
     - ReadWriteOnce

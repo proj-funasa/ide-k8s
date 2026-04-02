@@ -6,7 +6,7 @@ Cloud-based IDE for Development Analysis System.
 
 - **Deployment**: Main IDE container with development tools
 - **Service**: ClusterIP service for internal access  
-- **Ingress**: ALB ingress for external access via ads.dataiesb.com
+- **Ingress**: ALB ingress for external access via ide.dataiesb.com
 - **Storage**: 50GB GP3 EBS persistent volume
 - **RBAC**: Service account with cluster admin permissions
 
@@ -20,7 +20,7 @@ Cloud-based IDE for Development Analysis System.
 
 ## Access
 
-- URL: https://ads.dataiesb.com
+- URL: https://ide.dataiesb.com
 - Authentication: Password from AWS Secrets Manager
 
 ## Management

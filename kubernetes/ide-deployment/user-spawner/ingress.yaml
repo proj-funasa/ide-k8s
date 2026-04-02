@@ -1,21 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ads-ingress
-  namespace: ads-system
+  name: funasa-ide-ingress
+  namespace: default
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/auth-type: cognito
-    alb.ingress.kubernetes.io/auth-idp-cognito: '{"userPoolARN":"arn:aws:cognito-idp:us-east-1:248189947068:userpool/us-east-1_O3ALe8QmD","userPoolClientID":"3fngp6ubf1j600er9p7c4sa8vf","userPoolDomain":"dataiesb-ide"}'
+    alb.ingress.kubernetes.io/auth-idp-cognito: '{"userPoolARN":"arn:aws:cognito-idp:us-east-1:248189947068:userpool/us-east-1_KsQSqvc9B","userPoolClientID":"5lvif42ss8170fh2s24bs9fj5c","userPoolDomain":"iesb-ide-default"}'
     alb.ingress.kubernetes.io/auth-on-unauthenticated-request: authenticate
-    alb.ingress.kubernetes.io/auth-scope: openid
+    alb.ingress.kubernetes.io/auth-scope: openid email
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:248189947068:certificate/6d8e0740-fa40-4171-aff9-7cd815b6e2e8
 spec:
   rules:
-  - host: ads.dataiesb.com
+  - host: ide.dataiesb.com
     http:
       paths:
       - path: /

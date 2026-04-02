@@ -8,7 +8,7 @@
                 "cognito-idp:AdminDeleteUser",
                 "cognito-idp:ListUsers"
             ],
-            "Resource": "arn:aws:cognito-idp:us-east-1:248189947068:userpool/us-east-1_O3ALe8QmD"
+            "Resource": "arn:aws:cognito-idp:us-east-1:248189947068:userpool/us-east-1_KsQSqvc9B"
         }
     ]
 }
